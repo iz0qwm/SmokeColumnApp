@@ -30,6 +30,11 @@
             android:label="@string/map_activity_label"
             android:theme="@style/Theme.SmokeColumnApp">
         </activity>
+        <activity android:name=".InfoActivity"
+            android:exported="true"
+            android:label="@string/info_activity_label"
+            android:theme="@style/Theme.SmokeColumnApp">
+        </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBJSqcc7ru4UjbC5zcxh69P7D_3VFrEC6o" />

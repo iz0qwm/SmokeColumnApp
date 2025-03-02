@@ -33,26 +33,55 @@
         android:hint="Larghezza apparente colonna di fumo (pixel)"
         android:inputType="numberDecimal"/>
 
+    <!-- Aggiungi queste nuove EditText per i dati dei droni -->
     <EditText
-        android:id="@+id/editLat"
+        android:id="@+id/editLat1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Latitudine drone"
+        android:hint="Latitudine Drone 1"
         android:inputType="numberDecimal"/>
 
     <EditText
-        android:id="@+id/editLon"
+        android:id="@+id/editLon1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Longitudine drone"
+        android:hint="Longitudine Drone 1"
         android:inputType="numberDecimal"/>
 
     <EditText
-        android:id="@+id/editHeading"
+        android:id="@+id/editHeading1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Heading (gradi)"
+        android:hint="Heading Drone 1 (gradi)"
         android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editLat2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Latitudine Drone 2"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editLon2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitudine Drone 2"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editHeading2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Heading Drone 2 (gradi)"
+        android:inputType="numberDecimal"/>
+
+    <!-- Switch per scegliere se usare uno o due droni -->
+    <Switch
+        android:id="@+id/algorithmSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usa due droni"/>
 
     <Button
         android:id="@+id/btnCalcola"
@@ -60,14 +89,29 @@
         android:layout_height="wrap_content"
         android:text="Calcola"/>
 
-    <Button
-        android:id="@+id/btnShowMap"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mostra Mappa"
-        android:layout_below="@id/btnCalcola"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnShowMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mostra Mappa"
+            android:layout_below="@id/btnCalcola"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/btnInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Info" />
+            android:layout_below="@id/btnInfo"
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textResult"
