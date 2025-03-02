@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         useTwoDrones = true
         algorithmSwitch.isChecked = useTwoDrones
+        editFOV.visibility = View.GONE
+        editW.visibility = View.GONE
+        editWf.visibility = View.GONE
+        editw.visibility = View.GONE
 
         algorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
             useTwoDrones = isChecked

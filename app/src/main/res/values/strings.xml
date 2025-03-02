@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SmokeColumnApp</string>
-    <string name="map_activity_label">Map Activity</string>
-    <string name="info_activity_label">Map Activity</string>
+    <string name="map_activity_label">Mappa</string>
+    <string name="info_activity_label">Istruzioni</string>
 </resources>
