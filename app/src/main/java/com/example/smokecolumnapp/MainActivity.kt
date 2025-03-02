@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        useTwoDrones = true
+        algorithmSwitch.isChecked = useTwoDrones
+
         algorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
             useTwoDrones = isChecked
 
