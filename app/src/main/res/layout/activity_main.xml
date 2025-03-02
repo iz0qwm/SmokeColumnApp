@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editFOV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="FOV dell'obiettivo (gradi)"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Larghezza stimata colonna di fumo (m)"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editWf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Risoluzione orizzontale camera (pixel)"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Larghezza apparente colonna di fumo (pixel)"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editLat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Latitudine drone"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editLon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitudine drone"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Heading (gradi)"
+        android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/btnCalcola"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calcola"/>
+
+    <Button
+        android:id="@+id/btnShowMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostra Mappa"
+        android:layout_below="@id/btnCalcola"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Risultato"
+        android:textSize="16sp"
+        android:padding="10dp"/>
+</LinearLayout>

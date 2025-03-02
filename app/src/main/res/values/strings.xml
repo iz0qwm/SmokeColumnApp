@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SmokeColumnApp</string>
+    <string name="map_activity_label">Map Activity</string>
+</resources>
