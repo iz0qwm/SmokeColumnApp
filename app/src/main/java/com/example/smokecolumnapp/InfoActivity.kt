@@ -30,6 +30,9 @@ class InfoActivity : AppCompatActivity() {
             Premi "Mostra Mappa" per visualizzare il risultato.
             
             Maggiori informazioni su: https://tinyurl.com/doescolonnafumo
+            
+            Copyright
+            @ 2025 Raffaello Di Martino KWOS
         """.trimIndent()
 
         textInfo.autoLinkMask = Linkify.WEB_URLS
