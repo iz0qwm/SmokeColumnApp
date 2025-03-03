@@ -9,6 +9,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import android.graphics.Color
+
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -42,9 +46,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         if (useTwoDrones) {
             val drone2Pos = LatLng(latDrone2, lonDrone2)
             googleMap.addMarker(MarkerOptions().position(drone2Pos).title("Drone 2"))
+            val polyline2 = PolylineOptions().apply {
+                add(drone2Pos) // Aggiungi il drone 2
+                add(fumoPos)   // Aggiungi la colonna di fumo
+                width(5f)         // Imposta la larghezza della linea
+                color(Color.RED)  // Imposta il colore della linea
+            }
+            googleMap.addPolyline(polyline2) // Aggiungi la linea del secondo drone
         }
 
         googleMap.addMarker(MarkerOptions().position(fumoPos).title("Colonna di Fumo"))
+
+        // Aggiungi la linea che collega i droni alla colonna di fumo
+        val polylineOptions = PolylineOptions().apply {
+            add(drone1Pos)  // Aggiungi il drone 1
+            add(fumoPos)    // Aggiungi la colonna di fumo
+            width(5f)          // Imposta la larghezza della linea
+            color(Color.RED)   // Imposta il colore della linea
+        }
+        // Aggiungi la linea per il primo drone
+        googleMap.addPolyline(polylineOptions)
 
         // Centra la mappa sulla colonna di fumo o sul drone
         if (useTwoDrones) {
