@@ -4,13 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.*
 import com.google.android.gms.maps.model.LatLng
+import android.widget.ArrayAdapter
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +31,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val spinnerFOV = findViewById<Spinner>(R.id.spinnerFOV)
         val editFOV = findViewById<EditText>(R.id.editFOV)
+
+        val droneFOVs = mapOf(
+            "AIR 2S - 22mm - FOV 88°" to 88.0,
+            "AIR 3 - 70mm - FOV 35°" to 35.0,
+            "AIR 3 - 24mm - FOV 82.5°" to 82.0,
+            "AIR 3S - 24mm - FOV 84°" to 84.0,
+            "AIR 3S - 24mm - FOV 35°" to 35.0,
+            "Mavic 2 PRO - 24mm - FOV 83°" to 83.0,
+            "Mavic 2 Zoom - 24mm - FOV 83°" to 83.0,
+            "Mavic 2 Zoom - 48mm - FOV 48°" to 48.0,
+            "Mavic 3 Pro - 24mm - FOV 84°" to 84.0,
+            "Mavic 3T - 24mm - FOV 84°" to 84.0,
+            "Mavic 3T - 70mm - FOV 35°" to 35.0,
+            "MINI 3 Pro - 24mm - FOV 82.1°" to 82.1,
+            "MINI 4 Pro - 24mm - FOV 82.1°" to 82.1,
+            "MINI 3 - 24mm - FOV 82.1°" to 82.1,
+            "MINI 2 - 24mm - FOV 83°" to 83.0,
+            "Mini 4k - 24mm - FOV 83°" to 83.0,
+            "EVO II - 25.6mm - FOV 79°" to 79.0,
+            "NESSUNO di questi" to null
+        )
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, droneFOVs.keys.toList())
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerFOV.adapter = adapter
+
         val editW = findViewById<EditText>(R.id.editW)
         val editWf = findViewById<EditText>(R.id.editWf)
         val editw = findViewById<EditText>(R.id.editw)
@@ -49,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         useTwoDrones = true
         algorithmSwitch.isChecked = useTwoDrones
+        spinnerFOV.visibility = View.GONE
         editFOV.visibility = View.GONE
         editW.visibility = View.GONE
         editWf.visibility = View.GONE
@@ -58,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             useTwoDrones = isChecked
 
             if (useTwoDrones) {
+                spinnerFOV.visibility = View.GONE
                 editFOV.visibility = View.GONE
                 editW.visibility = View.GONE
                 editWf.visibility = View.GONE
@@ -67,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 editLon2.visibility = View.VISIBLE
                 editHeading2.visibility = View.VISIBLE
             } else {
+                spinnerFOV.visibility = View.VISIBLE
                 editFOV.visibility = View.VISIBLE
                 editW.visibility = View.VISIBLE
                 editWf.visibility = View.VISIBLE
@@ -76,6 +110,24 @@ class MainActivity : AppCompatActivity() {
                 editLon2.visibility = View.GONE
                 editHeading2.visibility = View.GONE
             }
+        }
+
+        spinnerFOV.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedDrone = parent.getItemAtPosition(position).toString()
+                val fovValue = droneFOVs[selectedDrone]
+
+                if (fovValue != null) {
+                    editFOV.setText(fovValue.toString())
+                    editFOV.visibility = View.GONE
+                    editFOV.isEnabled = false
+                } else {
+                    editFOV.setText("")
+                    editFOV.visibility = View.VISIBLE
+                    editFOV.isEnabled = true
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         btnCalcola.setOnClickListener {
