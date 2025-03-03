@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- Rimuovi il permesso WRITE_EXTERNAL_STORAGE -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
+
+    <!-- Permessi di accesso alla posizione -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Se la tua app deve accedere alla memoria esterna in modo più ampio, usa MANAGE_EXTERNAL_STORAGE -->
+    <!-- Aggiungi questo solo se è strettamente necessario, altrimenti rimuovilo -->
+    <!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +23,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,19 +34,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MapActivity"
             android:exported="true"
             android:label="@string/map_activity_label"
             android:theme="@style/Theme.SmokeColumnApp">
         </activity>
+
         <activity android:name=".InfoActivity"
             android:exported="true"
             android:label="@string/info_activity_label"
             android:theme="@style/Theme.SmokeColumnApp">
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBJSqcc7ru4UjbC5zcxh69P7D_3VFrEC6o" />
     </application>
+
 </manifest>
