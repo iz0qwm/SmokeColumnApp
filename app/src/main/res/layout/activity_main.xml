@@ -8,91 +8,113 @@
     <Spinner
         android:id="@+id/spinnerFOV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:minHeight="48dp" />
+
 
     <EditText
         android:id="@+id/editFOV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="FOV dell'obiettivo (gradi)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/fov_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="fov" />
 
     <EditText
         android:id="@+id/editW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Larghezza stimata colonna di fumo (m)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/column_width_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="column_width" />
 
     <EditText
         android:id="@+id/editWf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Risoluzione orizzontale camera (pixel)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/camera_resolution_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="camera_resolution" />
 
     <EditText
         android:id="@+id/editw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Larghezza apparente colonna di fumo (pixel)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/apparent_width_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="apparent_width" />
 
-    <!-- Aggiungi queste nuove EditText per i dati dei droni -->
     <EditText
         android:id="@+id/editLat1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Latitudine Drone 1"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone1_lat_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="latitude" />
 
     <EditText
         android:id="@+id/editLon1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Longitudine Drone 1"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone1_lon_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="longitude" />
 
     <EditText
         android:id="@+id/editHeading1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Heading Drone 1 (gradi)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone1_heading_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="heading" />
 
     <EditText
         android:id="@+id/editLat2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Latitudine Drone 2"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone2_lat_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="latitude" />
 
     <EditText
         android:id="@+id/editLon2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Longitudine Drone 2"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone2_lon_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="longitude" />
 
     <EditText
         android:id="@+id/editHeading2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Heading Drone 2 (gradi)"
-        android:inputType="numberDecimal"/>
+        android:minHeight="48dp"
+        android:hint="@string/drone2_heading_hint"
+        android:inputType="numberDecimal"
+        android:autofillHints="heading" />
 
-    <!-- Switch per scegliere se usare uno o due droni -->
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/algorithmSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Usa due droni"/>
+        android:minHeight="48dp"
+        android:text="@string/use_two_drones" />
 
     <Button
         android:id="@+id/btnCalcola"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calcola"/>
+        android:text="@string/button_calculate"
+        style="?android:attr/buttonBarButtonStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,24 +127,21 @@
             android:id="@+id/btnShowMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mostra Mappa"
-            android:layout_below="@id/btnCalcola"
-            android:layout_centerHorizontal="true"/>
+            android:text="@string/button_show_map" />
 
         <Button
             android:id="@+id/btnInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Istruzioni"
-            android:layout_below="@id/btnInfo" />
+            android:text="@string/button_info" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Risultato"
+        android:text="@string/text_result"
         android:textSize="16sp"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 </LinearLayout>

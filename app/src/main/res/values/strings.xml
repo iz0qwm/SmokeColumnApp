@@ -2,4 +2,27 @@
     <string name="app_name">SmokeColumnApp</string>
     <string name="map_activity_label">Mappa</string>
     <string name="info_activity_label">Istruzioni</string>
+
+    <!-- Stringhe per i campi di input -->
+    <string name="fov_hint">FOV obiettivo (gradi)</string>
+    <string name="column_width_hint">Larghezza stimata colonna di fumo (m)</string>
+    <string name="camera_resolution_hint">Risoluzione orizzontale camera (pixel)</string>
+    <string name="apparent_width_hint">Larghezza apparente colonna di fumo (pixel)</string>
+    <string name="drone1_lat_hint">Latitudine Drone 1</string>
+    <string name="drone1_lon_hint">Longitudine Drone 1</string>
+    <string name="drone1_heading_hint">Heading Drone 1 (gradi)</string>
+    <string name="drone2_lat_hint">Latitudine Drone 2</string>
+    <string name="drone2_lon_hint">Longitudine Drone 2</string>
+    <string name="drone2_heading_hint">Heading Drone 2 (gradi)</string>
+
+    <!-- Testo per lo switch -->
+    <string name="use_two_drones">Usa due droni</string>
+
+    <!-- Testo per i pulsanti -->
+    <string name="button_calculate">Calcola</string>
+    <string name="button_show_map">Mostra Mappa</string>
+    <string name="button_info">Istruzioni</string>
+
+    <!-- Testo per il risultato -->
+    <string name="text_result">Risultato</string>
 </resources>

@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         val btnCalcola = findViewById<Button>(R.id.btnCalcola)
         val btnShowMap = findViewById<Button>(R.id.btnShowMap)
         val textResult = findViewById<TextView>(R.id.textResult)
-        val algorithmSwitch = findViewById<Switch>(R.id.algorithmSwitch)
+        val algorithmSwitch = findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.algorithmSwitch)
         val btnInfo = findViewById<Button>(R.id.btnInfo)
         btnInfo.setOnClickListener {
             val intent = Intent(this, InfoActivity::class.java)
