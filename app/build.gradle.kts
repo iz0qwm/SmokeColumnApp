@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.play.services.location)
     //implementation(libs.geodesy)
     implementation("org.gavaghan:geodesy:1.1.3")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
