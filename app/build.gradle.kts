@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.smokecolumnapp"
+    namespace = "com.kwos.smokecolumnapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.smokecolumnapp"
+        applicationId = "com.kwos.smokecolumnapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
