@@ -15,16 +15,16 @@ class InfoActivity : AppCompatActivity() {
         textInfo.text = """
             Questa App è di ausilio alle OdV di Protezione Civile interessate nel monitoraggio delle colonne di fumo per la campagna A.I.B. Antincendio Boschivo. 
             
-            Grazie all'ausilio dei droni è possibile stabilire le coordinate stimate della colonna di fumo.
+            Grazie all'utilizzo dei droni è possibile stabilire le coordinate stimate della colonna di fumo.
             
             L'App si basa su due algoritmi:
-            1. utilizza due droni o un drone che si sposta in due posizioni differenti mentre guarda il target.
+            1. utilizza due droni o un drone che si sposta in due posizioni differenti mentre punta il target.
             Effettua una triangolazione.
             
             2. utilizza il campo visivo (FOV) della camera del drone e la stima in metri della dimensione della colonna da parte dell'operatore.
             
             Per entrambi gli algoritmi è necessario inserire anche le coordinate del o dei droni e l'angolo rispetto al nord verso cui si osserva la colonna di fumo (heading).
-            Selezionare la modalità foto 4:3 e attivare la X sul display per facilitare il posizionamento della colonna di fumo al centro della ripresa.
+            Sul display del radiocomando selezionare la modalità foto 4:3 e attivare la X sul display per facilitare il posizionamento della colonna di fumo al centro della ripresa.
             
             Premi "Calcola" per ottenere la posizione della colonna di fumo.
             Premi "Mostra Mappa" per visualizzare il risultato.
