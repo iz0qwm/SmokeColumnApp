@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             "AIR 3 - 70mm - FOV 35°" to 35.0,
             "AIR 3 - 24mm - FOV 82.5°" to 82.0,
             "AIR 3S - 24mm - FOV 84°" to 84.0,
-            "AIR 3S - 24mm - FOV 35°" to 35.0,
+            "AIR 3S - 70mm - FOV 35°" to 35.0,
             "Mavic 2 PRO - 24mm - FOV 83°" to 83.0,
             "Mavic 2 Zoom - 24mm - FOV 83°" to 83.0,
             "Mavic 2 Zoom - 48mm - FOV 48°" to 48.0,
@@ -141,15 +141,15 @@ class MainActivity : AppCompatActivity() {
                     val heading2 = editHeading2.text.toString().toDouble()
                     runAlgorithmForTwoDrones(heading1, heading2, textResult)
                 } else {
-                    val FOV_h = editFOV.text.toString().toDouble()
-                    val W = editW.text.toString().toDouble()
-                    val w_f = editWf.text.toString().toDouble()
-                    val w = editw.text.toString().toDouble()
-                    val D_fumo = metodo1(FOV_h, W, w_f, w)
-                    val (lat_fumo, lon_fumo) = calcolaCoordinateFumo(latDrone1, lonDrone1, D_fumo, heading1)
-                    latFumo = lat_fumo
-                    lonFumo = lon_fumo
-                    textResult.text = "Distanza fumo: ${"%.2f".format(D_fumo)} m\n" +
+                    val fovh = editFOV.text.toString().toDouble()
+                    val widthcolumn = editW.text.toString().toDouble()
+                    val widthimage = editWf.text.toString().toDouble()
+                    val widthapp = editw.text.toString().toDouble()
+                    val distancefumo = metodo1(fovh, widthcolumn, widthimage, widthapp)
+                    val (latitutdefumo, longitudefumo) = calcolaCoordinateFumo(latDrone1, lonDrone1, distancefumo, heading1)
+                    latFumo = latitutdefumo
+                    lonFumo = longitudefumo
+                    textResult.text = "Distanza fumo: ${"%.2f".format(distancefumo)} m\n" +
                             "Lat: ${"%.6f".format(latFumo)}, Lon: ${"%.6f".format(lonFumo)}"
                 }
             } catch (e: Exception) {
@@ -162,9 +162,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun metodo1(FOV_h: Double, W: Double, w_f: Double, w: Double): Double {
-        val FOV_h_rad = Math.toRadians(FOV_h)
-        return ((W + 9) / (2 * tan(FOV_h_rad / 2))) * (w_f / w)
+    private fun metodo1(fovh: Double, widthcolumn: Double, widthimage: Double, widthapp: Double): Double {
+        val fovhrad = Math.toRadians(fovh)
+        return ((widthcolumn + 9) / (2 * tan(fovhrad / 2))) * (widthimage / widthapp)
     }
 
     private fun runAlgorithmForTwoDrones(yaw1: Double, yaw2: Double, textResult: TextView) {
