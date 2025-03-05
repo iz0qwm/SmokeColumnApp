@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun metodo1(fovh: Double, widthcolumn: Double, widthimage: Double, widthapp: Double): Double {
         val fovhrad = Math.toRadians(fovh)
-        return ((widthcolumn + 9) / (2 * tan(fovhrad / 2))) * (widthimage / widthapp)
+        return ((widthcolumn/1.1) / (2 * tan(fovhrad / 2))) * (widthimage / (widthapp*0.95))
     }
 
     private fun runAlgorithmForTwoDrones(yaw1: Double, yaw2: Double, textResult: TextView) {
