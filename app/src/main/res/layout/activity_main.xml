@@ -1,147 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <Spinner
-        android:id="@+id/spinnerFOV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
-
-
-    <EditText
-        android:id="@+id/editFOV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/fov_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="fov" />
-
-    <EditText
-        android:id="@+id/editW"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/column_width_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="column_width" />
-
-    <EditText
-        android:id="@+id/editWf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/camera_resolution_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="camera_resolution" />
-
-    <EditText
-        android:id="@+id/editw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/apparent_width_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="apparent_width" />
-
-    <EditText
-        android:id="@+id/editLat1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone1_lat_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="latitude" />
-
-    <EditText
-        android:id="@+id/editLon1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone1_lon_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="longitude" />
-
-    <EditText
-        android:id="@+id/editHeading1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone1_heading_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="heading" />
-
-    <EditText
-        android:id="@+id/editLat2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone2_lat_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="latitude" />
-
-    <EditText
-        android:id="@+id/editLon2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone2_lon_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="longitude" />
-
-    <EditText
-        android:id="@+id/editHeading2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:hint="@string/drone2_heading_hint"
-        android:inputType="numberDecimal"
-        android:autofillHints="heading" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/algorithmSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="@string/use_two_drones" />
-
-    <Button
-        android:id="@+id/btnCalcola"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_calculate"
-        style="?android:attr/buttonBarButtonStyle" />
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnShowMap"
+        <!-- Titolo -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Smoke Column App"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="30dp" />
+
+        <Spinner
+            android:id="@+id/spinnerFOV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/editFOV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/fov_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="fov" />
+
+        <EditText
+            android:id="@+id/editW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/column_width_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="column_width" />
+
+        <EditText
+            android:id="@+id/editWf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/camera_resolution_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="camera_resolution" />
+
+        <EditText
+            android:id="@+id/editw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/apparent_width_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="apparent_width" />
+
+        <EditText
+            android:id="@+id/editLat1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone1_lat_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="latitude" />
+
+        <EditText
+            android:id="@+id/editLon1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone1_lon_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="longitude" />
+
+        <EditText
+            android:id="@+id/editHeading1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone1_heading_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="heading" />
+
+        <EditText
+            android:id="@+id/editLat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone2_lat_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="latitude" />
+
+        <EditText
+            android:id="@+id/editLon2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone2_lon_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="longitude" />
+
+        <EditText
+            android:id="@+id/editHeading2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/drone2_heading_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="heading" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/algorithmSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_show_map" />
+            android:minHeight="48dp"
+            android:text="@string/use_two_drones" />
 
         <Button
-            android:id="@+id/btnInfo"
-            android:layout_width="0dp"
+            android:id="@+id/btnCalcola"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_info" />
-    </LinearLayout>
+            android:text="@string/button_calculate"
+            style="?android:attr/buttonBarButtonStyle" />
 
-    <TextView
-        android:id="@+id/textResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_result"
-        android:textSize="16sp"
-        android:padding="10dp" />
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btnShowMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_show_map" />
+
+            <Button
+                android:id="@+id/btnInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_info" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_result"
+            android:textSize="16sp"
+            android:padding="10dp" />
+
+    </LinearLayout>
+</ScrollView>
