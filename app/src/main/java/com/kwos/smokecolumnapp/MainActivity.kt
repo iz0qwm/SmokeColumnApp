@@ -175,6 +175,7 @@ class MainActivity : AppCompatActivity() {
                 editLat2.visibility = View.VISIBLE
                 editLon2.visibility = View.VISIBLE
                 editHeading2.visibility = View.VISIBLE
+                iconSelectImage2.visibility = View.VISIBLE
             } else {
                 spinnerFOV.visibility = View.VISIBLE
                 editFOV.visibility = View.VISIBLE
