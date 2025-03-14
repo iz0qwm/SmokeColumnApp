@@ -13,17 +13,68 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.*
 import com.google.android.gms.maps.model.LatLng
 import android.widget.ArrayAdapter
+import android.app.Activity
+import android.net.Uri
+import android.provider.MediaStore
+import android.widget.ImageView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.exifinterface.media.ExifInterface
+import java.io.File
+import java.io.IOException
+import java.io.ByteArrayInputStream
+import java.util.regex.Pattern
+import android.util.Log
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.StringReader
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.DocumentBuilder
+import org.xml.sax.InputSource
+import org.apache.tika.parser.AutoDetectParser
+import org.apache.tika.parser.ParseContext
+import java.io.FileInputStream
+import org.apache.tika.metadata.Metadata
+import org.w3c.dom.Document
+//import org.jdom2.Document
+import org.jdom2.input.SAXBuilder
+//import org.jdom2.input.stream.InputStreamReader
+import org.jdom2.Element
+import org.jdom2.Namespace
+
 
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "SmokeColumnApp"
+
+    // Variabili EditText
+    private lateinit var editLat1: EditText
+    private lateinit var editLon1: EditText
+    private lateinit var editHeading1: EditText
+    private lateinit var editLat2: EditText
+    private lateinit var editLon2: EditText
+    private lateinit var editHeading2: EditText
+    private lateinit var iconSelectImage1: ImageView
+    private lateinit var iconSelectImage2: ImageView
+
+    //Altre variabili
     private var latDrone1: Double = 0.0
     private var lonDrone1: Double = 0.0
+    private var yawDrone1: Double = 0.0
     private var latDrone2: Double = 0.0
     private var lonDrone2: Double = 0.0
+    private var yawDrone2: Double = 0.0
     private var latFumo: Double = 0.0
     private var lonFumo: Double = 0.0
     private var useTwoDrones: Boolean = false
+
+
+    private lateinit var imagePickerLauncher1: ActivityResultLauncher<Intent>
+    private lateinit var imagePickerLauncher2: ActivityResultLauncher<Intent>
+
+    data class XMPData(val latitude: Double?, val longitude: Double?, val yawDegree: Double?)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +113,16 @@ class MainActivity : AppCompatActivity() {
         val editW = findViewById<EditText>(R.id.editW)
         val editWf = findViewById<EditText>(R.id.editWf)
         val editw = findViewById<EditText>(R.id.editw)
-        val editLat1 = findViewById<EditText>(R.id.editLat1)
-        val editLon1 = findViewById<EditText>(R.id.editLon1)
-        val editHeading1 = findViewById<EditText>(R.id.editHeading1)
-        val editLat2 = findViewById<EditText>(R.id.editLat2)
-        val editLon2 = findViewById<EditText>(R.id.editLon2)
-        val editHeading2 = findViewById<EditText>(R.id.editHeading2)
+        //val editLat1 = findViewById<EditText>(R.id.editLat1)
+        //val editLon1 = findViewById<EditText>(R.id.editLon1)
+        editLat1 = findViewById(R.id.editLat1)
+        editLon1 = findViewById(R.id.editLon1)
+        editHeading1 = findViewById(R.id.editHeading1)
+        //val editLat2 = findViewById<EditText>(R.id.editLat2)
+        //val editLon2 = findViewById<EditText>(R.id.editLon2)
+        editLat2 = findViewById(R.id.editLat2)
+        editLon2 = findViewById(R.id.editLon2)
+        editHeading2 = findViewById(R.id.editHeading2)
         val btnCalcola = findViewById<Button>(R.id.btnCalcola)
         val btnShowMap = findViewById<Button>(R.id.btnShowMap)
         val textResult = findViewById<TextView>(R.id.textResult)
@@ -77,6 +132,27 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
+
+        //SELEZIONE IMMAGINI PER RECUPERO COORDINATE
+        // Collega le View
+        iconSelectImage1 = findViewById(R.id.iconSelectImage1)
+        iconSelectImage2 = findViewById(R.id.iconSelectImage2)
+
+        // Launcher per selezionare un'immagine
+        imagePickerLauncher1 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            handleImageResult(result, isDrone1 = true)
+        }
+
+        imagePickerLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            handleImageResult(result, isDrone1 = false)
+        }
+
+        // Click listeners per selezione immagine
+        iconSelectImage1.setOnClickListener { openImagePicker(imagePickerLauncher1) }
+        iconSelectImage2.setOnClickListener { openImagePicker(imagePickerLauncher2) }
+        // FINE SELEZIONE IMMAGINI
+
+
 
         useTwoDrones = true
         algorithmSwitch.isChecked = useTwoDrones
@@ -109,6 +185,7 @@ class MainActivity : AppCompatActivity() {
                 editLat2.visibility = View.GONE
                 editLon2.visibility = View.GONE
                 editHeading2.visibility = View.GONE
+                iconSelectImage2.visibility = View.GONE
             }
         }
 
@@ -217,4 +294,117 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
+    private fun openImagePicker(launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        launcher.launch(intent)
+    }
+
+    private fun handleImageResult(result: ActivityResult, isDrone1: Boolean) {
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val imageUri: Uri? = result.data!!.data
+            if (imageUri != null) {
+                // ✅ Usa direttamente l'URI, senza convertire in percorso file
+                extractDroneDataFromXMP(imageUri, isDrone1)
+            } else {
+                logDebug(TAG, "URI immagine nullo")
+            }
+        }
+    }
+
+
+    // Funzione per ottenere il percorso del file dall'URI
+    private fun getRealPathFromURI(uri: Uri): String? {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.moveToFirst()
+        val idx = cursor?.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        val path = cursor?.getString(idx ?: -1)
+        cursor?.close()
+        return path
+    }
+
+
+    private fun extractDroneDataFromXMP(imageUri: Uri, isDrone1: Boolean) {
+        try {
+            val inputStream = contentResolver.openInputStream(imageUri)
+            if (inputStream != null) {
+                val exif = ExifInterface(inputStream)
+
+                // 🔍 Legge i metadati XMP
+                val xmpData = exif.getAttribute(ExifInterface.TAG_XMP)
+                if (xmpData != null) {
+                    val xmpResult = parseXMPData(xmpData)
+                    if (xmpResult != null) {
+                        val lat = xmpResult.latitude
+                        val lon = xmpResult.longitude
+                        val yaw = xmpResult.yawDegree
+
+                        // 🛰️ Inserisce i dati nei campi corretti
+                        if (lat != null && lon != null && yaw != null) {
+                            if (isDrone1) {
+                                latDrone1 = lat
+                                lonDrone1 = lon
+                                yawDrone1 = yaw
+                                editLat1.setText(lat.toString())
+                                editLon1.setText(lon.toString())
+                                editHeading1.setText(yaw.toString())
+                            } else {
+                                latDrone2 = lat
+                                lonDrone2 = lon
+                                yawDrone2 = yaw
+                                editLat2.setText(lat.toString())
+                                editLon2.setText(lon.toString())
+                                editHeading2.setText(yaw.toString())
+                            }
+                            logDebug(TAG, "Dati trovati - Lat: $lat, Lon: $lon, Yaw: $yaw}")
+                        } else {
+                            logDebug(TAG, "Dati GPS non trovati nei metadati XMP")
+                        }
+                    } else {
+                        logDebug(TAG, "Errore nel parsing dei metadati XMP")
+                    }
+                } else {
+                    logDebug(TAG, "Metadati XMP non trovati nell'immagine")
+                }
+
+                inputStream.close()
+            } else {
+                logError(TAG, "Impossibile aprire il file per leggere i dati XMP.")
+            }
+        } catch (e: IOException) {
+            logError(TAG, "Errore nella lettura dei dati XMP: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
+    private fun parseXMPData(xmpData: String): XMPData? {
+        return try {
+            val factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
+            factory.isNamespaceAware = true
+            val builder = factory.newDocumentBuilder()
+            val doc: Document = builder.parse(InputSource(StringReader(xmpData)))
+
+            val descriptions = doc.getElementsByTagName("rdf:Description")
+            if (descriptions.length > 0) {
+                val description = descriptions.item(0)
+
+                val latitude = description.attributes.getNamedItem("drone-dji:GpsLatitude")?.nodeValue?.toDoubleOrNull()
+                val longitude = description.attributes.getNamedItem("drone-dji:GpsLongitude")?.nodeValue?.toDoubleOrNull()
+                val yawDegree = description.attributes.getNamedItem("drone-dji:FlightYawDegree")?.nodeValue?.toDoubleOrNull()
+
+                if (latitude != null && longitude != null && yawDegree != null) {
+                    XMPData(latitude, longitude, yawDegree)
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            logError(TAG, "Errore nel parsing dei dati XMP", e)
+            null
+        }
+    }
+
+
 }
+

@@ -64,14 +64,33 @@
             android:inputType="numberDecimal"
             android:autofillHints="apparent_width" />
 
-        <EditText
-            android:id="@+id/editLat1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="@string/drone1_lat_hint"
-            android:inputType="numberDecimal"
-            android:autofillHints="latitude" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/editLat1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:hint="@string/drone1_lat_hint"
+                android:inputType="numberDecimal"
+                android:autofillHints="latitude" />
+
+            <ImageView
+                android:id="@+id/iconSelectImage1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:contentDescription="Seleziona immagine Drone 1"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/editLon1"
@@ -91,14 +110,33 @@
             android:inputType="numberDecimal"
             android:autofillHints="heading" />
 
-        <EditText
-            android:id="@+id/editLat2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="@string/drone2_lat_hint"
-            android:inputType="numberDecimal"
-            android:autofillHints="latitude" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/editLat2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:hint="@string/drone2_lat_hint"
+                android:inputType="numberDecimal"
+                android:autofillHints="latitude" />
+
+            <ImageView
+                android:id="@+id/iconSelectImage2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:contentDescription="Seleziona immagine Drone 2"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/editLon2"
