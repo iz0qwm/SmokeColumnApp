@@ -91,7 +91,6 @@
                 android:focusable="true"/>
         </LinearLayout>
 
-
         <EditText
             android:id="@+id/editLon1"
             android:layout_width="match_parent"
@@ -198,6 +197,24 @@
             android:text="@string/text_result"
             android:textSize="16sp"
             android:padding="10dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:adjustViewBounds="true"/>
+
+            <com.kwos.smokecolumnapp.ui.theme.DrawView
+                android:id="@+id/drawView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+
 
     </LinearLayout>
 </ScrollView>

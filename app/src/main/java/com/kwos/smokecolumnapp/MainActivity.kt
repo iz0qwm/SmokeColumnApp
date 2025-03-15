@@ -1,5 +1,6 @@
 package com.kwos.smokecolumnapp
 
+import com.kwos.smokecolumnapp.ui.theme.DrawView
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,16 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.exifinterface.media.ExifInterface
+import android.graphics.PointF
+import android.view.MotionEvent
+import android.widget.Toast
+import kotlin.math.sqrt
+import android.view.GestureDetector
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.util.AttributeSet
 import java.io.File
 import java.io.IOException
 import java.io.ByteArrayInputStream
@@ -42,6 +53,8 @@ import org.jdom2.input.SAXBuilder
 //import org.jdom2.input.stream.InputStreamReader
 import org.jdom2.Element
 import org.jdom2.Namespace
+import com.github.chrisbanes.photoview.PhotoView
+
 
 
 
@@ -56,8 +69,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editLat2: EditText
     private lateinit var editLon2: EditText
     private lateinit var editHeading2: EditText
+    private lateinit var editw: EditText
     private lateinit var iconSelectImage1: ImageView
     private lateinit var iconSelectImage2: ImageView
+
+    private lateinit var imagePreview: PhotoView
+    private lateinit var drawView: DrawView
+    private lateinit var gestureDetector: GestureDetector
+
 
     //Altre variabili
     private var latDrone1: Double = 0.0
@@ -69,6 +88,10 @@ class MainActivity : AppCompatActivity() {
     private var latFumo: Double = 0.0
     private var lonFumo: Double = 0.0
     private var useTwoDrones: Boolean = false
+
+    var startPoint: PointF? = null
+    var endPoint: PointF? = null
+    var selectedWidthPx: Float = 0f  // Lunghezza in pixel
 
 
     private lateinit var imagePickerLauncher1: ActivityResultLauncher<Intent>
@@ -112,21 +135,23 @@ class MainActivity : AppCompatActivity() {
 
         val editW = findViewById<EditText>(R.id.editW)
         val editWf = findViewById<EditText>(R.id.editWf)
-        val editw = findViewById<EditText>(R.id.editw)
-        //val editLat1 = findViewById<EditText>(R.id.editLat1)
-        //val editLon1 = findViewById<EditText>(R.id.editLon1)
+        editw = findViewById(R.id.editw)
         editLat1 = findViewById(R.id.editLat1)
         editLon1 = findViewById(R.id.editLon1)
         editHeading1 = findViewById(R.id.editHeading1)
-        //val editLat2 = findViewById<EditText>(R.id.editLat2)
-        //val editLon2 = findViewById<EditText>(R.id.editLon2)
         editLat2 = findViewById(R.id.editLat2)
         editLon2 = findViewById(R.id.editLon2)
         editHeading2 = findViewById(R.id.editHeading2)
+        //val drawView = findViewById<DrawView>(R.id.drawView)
         val btnCalcola = findViewById<Button>(R.id.btnCalcola)
         val btnShowMap = findViewById<Button>(R.id.btnShowMap)
         val textResult = findViewById<TextView>(R.id.textResult)
         val algorithmSwitch = findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.algorithmSwitch)
+
+        //Selezione su immagine
+        imagePreview = findViewById(R.id.imagePreview)
+        drawView = findViewById(R.id.drawView)
+
         val btnInfo = findViewById<Button>(R.id.btnInfo)
         btnInfo.setOnClickListener {
             val intent = Intent(this, InfoActivity::class.java)
@@ -208,6 +233,37 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
+        // Crea un GestureDetector per distinguere tra tap singolo e zoom
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+                logDebug(TAG, "gestureDetector: Single tap detected at x: ${event.x}, y: ${event.y}")
+                handleTouch(event.x, event.y)
+                return true
+            }
+        })
+
+        imagePreview.setOnTouchListener { view, event ->
+            // Logga il numero di dita
+            logDebug(TAG, "TouchListener: Event action: ${event.action}, pointer count: ${event.pointerCount}")
+
+            // Lascia che PhotoView gestisca tutti gli eventi touch, compreso il pinch-to-zoom
+            if (imagePreview.onTouchEvent(event)) {
+                return@setOnTouchListener true
+            }
+
+            // Se è un tocco singolo, usa il GestureDetector per gestire la selezione del punto
+            if (event.pointerCount == 1) {
+                logDebug(TAG, "TouchListener: Un solo dito rilevato, passo a GestureDetector")
+                gestureDetector.onTouchEvent(event)
+            }
+            // Per evitare il warning di performClick()
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                view.performClick()
+            }
+            true
+        }
+
+
         btnCalcola.setOnClickListener {
             try {
                 latDrone1 = editLat1.text.toString().toDouble()
@@ -221,15 +277,22 @@ class MainActivity : AppCompatActivity() {
                     runAlgorithmForTwoDrones(heading1, heading2, textResult)
                 } else {
                     val fovh = editFOV.text.toString().toDouble()
-                    val widthcolumn = editW.text.toString().toDouble()
                     val widthimage = editWf.text.toString().toDouble()
                     val widthapp = editw.text.toString().toDouble()
-                    val distancefumo = metodo1(fovh, widthcolumn, widthimage, widthapp)
-                    val (latitutdefumo, longitudefumo) = calcolaCoordinateFumo(latDrone1, lonDrone1, distancefumo, heading1)
-                    latFumo = latitutdefumo
-                    lonFumo = longitudefumo
-                    textResult.text = "Distanza fumo: ${"%.2f".format(distancefumo)} m\n" +
-                            "Lat: ${"%.6f".format(latFumo)}, Lon: ${"%.6f".format(lonFumo)}"
+                    //val widthcolumn = editW.text.toString().toDouble()
+                    // ✅ Usa il valore selezionato sulla foto
+                    val widthcolumn = selectedWidthPx.toDouble()
+
+                    if (widthcolumn > 0) {
+                        val distancefumo = metodo1(fovh, widthcolumn, widthimage, widthapp)
+                        val (latitutdefumo, longitudefumo) = calcolaCoordinateFumo(latDrone1, lonDrone1, distancefumo, heading1)
+                        latFumo = latitutdefumo
+                        lonFumo = longitudefumo
+                        textResult.text = "Distanza fumo: ${"%.2f".format(distancefumo)} m\n" +
+                                "Lat: ${"%.6f".format(latFumo)}, Lon: ${"%.6f".format(lonFumo)}"
+                    } else {
+                        Toast.makeText(this, "Seleziona la colonna di fumo!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: Exception) {
                 textResult.text = "Errore: Controlla i dati inseriti"
@@ -298,29 +361,6 @@ class MainActivity : AppCompatActivity() {
     private fun openImagePicker(launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         launcher.launch(intent)
-    }
-
-    private fun handleImageResult(result: ActivityResult, isDrone1: Boolean) {
-        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-            val imageUri: Uri? = result.data!!.data
-            if (imageUri != null) {
-                // ✅ Usa direttamente l'URI, senza convertire in percorso file
-                extractDroneDataFromXMP(imageUri, isDrone1)
-            } else {
-                logDebug(TAG, "URI immagine nullo")
-            }
-        }
-    }
-
-
-    // Funzione per ottenere il percorso del file dall'URI
-    private fun getRealPathFromURI(uri: Uri): String? {
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.moveToFirst()
-        val idx = cursor?.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-        val path = cursor?.getString(idx ?: -1)
-        cursor?.close()
-        return path
     }
 
 
@@ -406,6 +446,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleImageResult(result: ActivityResult, isDrone1: Boolean) {
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val imageUri: Uri? = result.data!!.data
+            if (imageUri != null) {
+                // ✅ Usa direttamente l'URI, senza convertire in percorso file
+                extractDroneDataFromXMP(imageUri, isDrone1)
+                // Verifica se useTwoDrones è false prima di caricare l'immagine
+                if (!useTwoDrones) {
+                    logDebug(TAG, "hanedleImageResult: Carico immagine in PhotoView: $imageUri")
+                    findViewById<PhotoView>(R.id.imagePreview).setImageURI(imageUri) // 🔹 Carica immagine
+                }
+            } else {
+                logDebug(TAG, "URI immagine nullo")
+            }
+        }
+    }
+
+    private fun handleTouch(x: Float, y: Float) {
+        logDebug(TAG, "handleTouch selection: Point selected at x: $x, y: $y")
+        if (startPoint == null) {
+            startPoint = PointF(x, y)
+            Toast.makeText(this, "Seleziona il secondo punto", Toast.LENGTH_SHORT).show()
+        } else {
+            endPoint = PointF(x, y)
+
+            // Calcola la distanza in pixel
+            val dx = endPoint!!.x - startPoint!!.x
+            val dy = endPoint!!.y - startPoint!!.y
+            selectedWidthPx = sqrt(dx * dx + dy * dy).toFloat()
+            editw.setText(selectedWidthPx.toInt().toString())
+
+            // Disegna la linea sopra l'immagine
+            drawView.setPoints(startPoint!!.x, startPoint!!.y, endPoint!!.x, endPoint!!.y)
+
+            Toast.makeText(this, "Lunghezza selezionata: ${selectedWidthPx.toInt()} px", Toast.LENGTH_SHORT).show()
+
+            // Reset per una nuova selezione
+            startPoint = null
+            endPoint = null
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        imagePreview.setOnClickListener { it.performClick() }
+    }
 
 }
+
+
 
