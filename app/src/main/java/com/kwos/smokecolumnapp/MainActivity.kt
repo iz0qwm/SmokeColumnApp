@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editLon2: EditText
     private lateinit var editHeading2: EditText
     private lateinit var editw: EditText
+    private lateinit var editWf: EditText
     private lateinit var iconSelectImage1: ImageView
     private lateinit var iconSelectImage2: ImageView
 
@@ -134,7 +135,8 @@ class MainActivity : AppCompatActivity() {
         spinnerFOV.adapter = adapter
 
         val editW = findViewById<EditText>(R.id.editW)
-        val editWf = findViewById<EditText>(R.id.editWf)
+        //val editWf = findViewById<EditText>(R.id.editWf)
+        editWf = findViewById(R.id.editWf)
         editw = findViewById(R.id.editw)
         editLat1 = findViewById(R.id.editLat1)
         editLon1 = findViewById(R.id.editLon1)
@@ -150,6 +152,11 @@ class MainActivity : AppCompatActivity() {
 
         //Selezione su immagine
         imagePreview = findViewById(R.id.imagePreview)
+        // Imposta uno zoom iniziale (es. 3x)
+        imagePreview.maximumScale = 5.0f  // Zoom massimo
+        imagePreview.minimumScale = 1.0f  // Zoom minimo
+        imagePreview.setScale(3.0f, imagePreview.width / 2f, imagePreview.height / 2f, true)
+
         drawView = findViewById(R.id.drawView)
 
         val btnInfo = findViewById<Button>(R.id.btnInfo)
@@ -196,17 +203,20 @@ class MainActivity : AppCompatActivity() {
                 editW.visibility = View.GONE
                 editWf.visibility = View.GONE
                 editw.visibility = View.GONE
+                imagePreview.visibility = View.GONE
 
                 editLat2.visibility = View.VISIBLE
                 editLon2.visibility = View.VISIBLE
                 editHeading2.visibility = View.VISIBLE
                 iconSelectImage2.visibility = View.VISIBLE
+
             } else {
                 spinnerFOV.visibility = View.VISIBLE
                 editFOV.visibility = View.VISIBLE
                 editW.visibility = View.VISIBLE
                 editWf.visibility = View.VISIBLE
                 editw.visibility = View.VISIBLE
+                imagePreview.visibility = View.VISIBLE
 
                 editLat2.visibility = View.GONE
                 editLon2.visibility = View.GONE
@@ -456,6 +466,15 @@ class MainActivity : AppCompatActivity() {
                 if (!useTwoDrones) {
                     logDebug(TAG, "hanedleImageResult: Carico immagine in PhotoView: $imageUri")
                     findViewById<PhotoView>(R.id.imagePreview).setImageURI(imageUri) // 🔹 Carica immagine
+
+                    // ✅ Ottieni la larghezza dell'immagine dopo che è stata caricata
+                    imagePreview.viewTreeObserver.addOnGlobalLayoutListener {
+                        val drawable = imagePreview.drawable
+                        if (drawable != null) {
+                            val widthImage = drawable.intrinsicWidth.toDouble() // Larghezza in pixel
+                            findViewById<EditText>(R.id.editWf).setText(widthImage.toString()) // Mostra nell'EditText
+                        }
+                    }
                 }
             } else {
                 logDebug(TAG, "URI immagine nullo")
