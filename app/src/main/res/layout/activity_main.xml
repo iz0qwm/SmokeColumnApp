@@ -38,7 +38,7 @@
             android:autofillHints="fov" />
 
         <EditText
-            android:id="@+id/editW"
+            android:id="@+id/editLargStimFumom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
@@ -47,7 +47,7 @@
             android:autofillHints="column_width" />
 
         <EditText
-            android:id="@+id/editWf"
+            android:id="@+id/editCameraResolutionPx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
@@ -56,13 +56,31 @@
             android:autofillHints="camera_resolution" />
 
         <EditText
-            android:id="@+id/editw"
+            android:id="@+id/editLargAppFumoPx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:hint="@string/apparent_width_hint"
             android:inputType="numberDecimal"
             android:autofillHints="apparent_width" />
+
+        <EditText
+            android:id="@+id/editgimbalPitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Gimbal Pitch"
+            android:inputType="numberDecimal"
+            android:autofillHints="gimbalPitch" />
+
+        <EditText
+            android:id="@+id/editrelativeAltitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Relative Altitude"
+            android:inputType="numberDecimal"
+            android:autofillHints="relativeAltitude" />
 
         <LinearLayout
             android:layout_width="match_parent"

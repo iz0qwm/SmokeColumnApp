@@ -66,11 +66,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editLat1: EditText
     private lateinit var editLon1: EditText
     private lateinit var editHeading1: EditText
+    private lateinit var editgimbalPitch: EditText
+    private lateinit var editrelativeAltitude: EditText
     private lateinit var editLat2: EditText
     private lateinit var editLon2: EditText
     private lateinit var editHeading2: EditText
-    private lateinit var editw: EditText
-    private lateinit var editWf: EditText
+    private lateinit var editLargAppFumoPx: EditText
+    private lateinit var editCameraResolutionPx: EditText
     private lateinit var iconSelectImage1: ImageView
     private lateinit var iconSelectImage2: ImageView
 
@@ -83,6 +85,8 @@ class MainActivity : AppCompatActivity() {
     private var latDrone1: Double = 0.0
     private var lonDrone1: Double = 0.0
     private var yawDrone1: Double = 0.0
+    private var gimbalPitchDrone1: Double = 0.0
+    private var relativeAltitudeDrone1: Double = 0.0
     private var latDrone2: Double = 0.0
     private var lonDrone2: Double = 0.0
     private var yawDrone2: Double = 0.0
@@ -98,7 +102,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imagePickerLauncher1: ActivityResultLauncher<Intent>
     private lateinit var imagePickerLauncher2: ActivityResultLauncher<Intent>
 
-    data class XMPData(val latitude: Double?, val longitude: Double?, val yawDegree: Double?)
+    data class XMPData(val latitude: Double?, val longitude: Double?, val yawDegree: Double?, val gimbalpitch: Double?, val relativealtitude: Double?)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,13 +138,15 @@ class MainActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerFOV.adapter = adapter
 
-        val editW = findViewById<EditText>(R.id.editW)
+        val editLargStimFumom = findViewById<EditText>(R.id.editLargStimFumom)
         //val editWf = findViewById<EditText>(R.id.editWf)
-        editWf = findViewById(R.id.editWf)
-        editw = findViewById(R.id.editw)
+        editCameraResolutionPx = findViewById(R.id.editCameraResolutionPx)
+        editLargAppFumoPx = findViewById(R.id.editLargAppFumoPx)
         editLat1 = findViewById(R.id.editLat1)
         editLon1 = findViewById(R.id.editLon1)
         editHeading1 = findViewById(R.id.editHeading1)
+        editgimbalPitch = findViewById(R.id.editgimbalPitch)
+        editrelativeAltitude = findViewById(R.id.editrelativeAltitude)
         editLat2 = findViewById(R.id.editLat2)
         editLon2 = findViewById(R.id.editLon2)
         editHeading2 = findViewById(R.id.editHeading2)
@@ -190,9 +196,11 @@ class MainActivity : AppCompatActivity() {
         algorithmSwitch.isChecked = useTwoDrones
         spinnerFOV.visibility = View.GONE
         editFOV.visibility = View.GONE
-        editW.visibility = View.GONE
-        editWf.visibility = View.GONE
-        editw.visibility = View.GONE
+        editgimbalPitch.visibility = View.GONE
+        editrelativeAltitude.visibility = View.GONE
+        editCameraResolutionPx.visibility = View.GONE
+        editLargAppFumoPx.visibility = View.GONE
+        editLargStimFumom.visibility = View.GONE
 
         algorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
             useTwoDrones = isChecked
@@ -200,9 +208,11 @@ class MainActivity : AppCompatActivity() {
             if (useTwoDrones) {
                 spinnerFOV.visibility = View.GONE
                 editFOV.visibility = View.GONE
-                editW.visibility = View.GONE
-                editWf.visibility = View.GONE
-                editw.visibility = View.GONE
+                editLargStimFumom.visibility = View.GONE
+                editgimbalPitch.visibility = View.GONE
+                editrelativeAltitude.visibility = View.GONE
+                editCameraResolutionPx.visibility = View.GONE
+                editLargAppFumoPx.visibility = View.GONE
                 imagePreview.visibility = View.GONE
 
                 editLat2.visibility = View.VISIBLE
@@ -213,9 +223,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 spinnerFOV.visibility = View.VISIBLE
                 editFOV.visibility = View.VISIBLE
-                editW.visibility = View.VISIBLE
-                editWf.visibility = View.VISIBLE
-                editw.visibility = View.VISIBLE
+                editLargStimFumom.visibility = View.VISIBLE
+                editgimbalPitch.visibility = View.VISIBLE
+                editrelativeAltitude.visibility = View.VISIBLE
+                editCameraResolutionPx.visibility = View.VISIBLE
+                editLargAppFumoPx.visibility = View.VISIBLE
                 imagePreview.visibility = View.VISIBLE
 
                 editLat2.visibility = View.GONE
@@ -287,14 +299,16 @@ class MainActivity : AppCompatActivity() {
                     runAlgorithmForTwoDrones(heading1, heading2, textResult)
                 } else {
                     val fovh = editFOV.text.toString().toDouble()
-                    val widthimage = editWf.text.toString().toDouble()
-                    val widthapp = editw.text.toString().toDouble()
+                    val widthimage = editCameraResolutionPx.text.toString().toDouble()
+                    val widthcolumn = editLargStimFumom.text.toString().toDouble()
+                    val gimbalpitch = editgimbalPitch.text.toString().toDouble()
+                    val relativealtitude = editrelativeAltitude.text.toString().toDouble()
                     //val widthcolumn = editW.text.toString().toDouble()
                     // ✅ Usa il valore selezionato sulla foto
-                    val widthcolumn = selectedWidthPx.toDouble()
+                    val widthapp = selectedWidthPx.toDouble()
 
-                    if (widthcolumn > 0) {
-                        val distancefumo = metodo1(fovh, widthcolumn, widthimage, widthapp)
+                    if (widthapp > 0) {
+                        val distancefumo = metodo1(fovh, widthcolumn, widthimage, widthapp, gimbalpitch, relativealtitude)
                         val (latitutdefumo, longitudefumo) = calcolaCoordinateFumo(latDrone1, lonDrone1, distancefumo, heading1)
                         latFumo = latitutdefumo
                         lonFumo = longitudefumo
@@ -314,9 +328,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun metodo1(fovh: Double, widthcolumn: Double, widthimage: Double, widthapp: Double): Double {
+    private fun metodo1(fovh: Double, widthcolumn: Double, widthimage: Double, widthapp: Double, gimbalPitch: Double, relativeAltitude: Double): Double {
         val fovhrad = Math.toRadians(fovh)
-        return ((widthcolumn/1.1) / (2 * tan(fovhrad / 2))) * (widthimage / (widthapp*0.95))
+
+        //logDebug(TAG, "fovh: $fovh, widthcolumn: $widthcolumn, widthimage: $widthimage, widthapp: $widthapp, fovhrad: $fovhrad")
+        //return ((widthcolumn/1.1) / (2 * tan(fovhrad / 2))) * (widthimage / (widthapp*0.95))
+        //val gimbalPitch = 0.6
+        //val relativeAltitude = 37.8
+        val aspectRatio = 4.0 / 3.0
+        val fovvrad = 2 * atan(tan(fovhrad / 2) * (1 / aspectRatio))
+        val theta = Math.toRadians(abs(gimbalPitch)) // Angolo del gimbal in radianti
+        val distanzaStimata = ((widthcolumn / 1.00) / (2 * tan(fovhrad / 2))) * (widthimage / (widthapp * 0.70))
+
+        // Correzione usando l'altitudine del drone e il FOV verticale
+        val distanzaCorretta = distanzaStimata + (relativeAltitude * tan(theta + fovvrad / 2))
+
+        return distanzaCorretta
     }
 
     private fun runAlgorithmForTwoDrones(yaw1: Double, yaw2: Double, textResult: TextView) {
@@ -388,16 +415,22 @@ class MainActivity : AppCompatActivity() {
                         val lat = xmpResult.latitude
                         val lon = xmpResult.longitude
                         val yaw = xmpResult.yawDegree
+                        val gimpitch = xmpResult.gimbalpitch
+                        val relaltitude = xmpResult.relativealtitude
 
                         // 🛰️ Inserisce i dati nei campi corretti
-                        if (lat != null && lon != null && yaw != null) {
+                        if (lat != null && lon != null && yaw != null && gimpitch != null && relaltitude != null) {
                             if (isDrone1) {
                                 latDrone1 = lat
                                 lonDrone1 = lon
                                 yawDrone1 = yaw
+                                gimbalPitchDrone1 = gimpitch
+                                relativeAltitudeDrone1 = relaltitude
                                 editLat1.setText(lat.toString())
                                 editLon1.setText(lon.toString())
                                 editHeading1.setText(yaw.toString())
+                                editgimbalPitch.setText(gimpitch.toString())
+                                editrelativeAltitude.setText(relaltitude.toString())
                             } else {
                                 latDrone2 = lat
                                 lonDrone2 = lon
@@ -406,7 +439,7 @@ class MainActivity : AppCompatActivity() {
                                 editLon2.setText(lon.toString())
                                 editHeading2.setText(yaw.toString())
                             }
-                            logDebug(TAG, "Dati trovati - Lat: $lat, Lon: $lon, Yaw: $yaw}")
+                            logDebug(TAG, "Dati trovati - Lat: $lat, Lon: $lon, Yaw: $yaw}, GimbalPitch: $gimpitch, RelativeAltitude: $relaltitude")
                         } else {
                             logDebug(TAG, "Dati GPS non trovati nei metadati XMP")
                         }
@@ -441,9 +474,11 @@ class MainActivity : AppCompatActivity() {
                 val latitude = description.attributes.getNamedItem("drone-dji:GpsLatitude")?.nodeValue?.toDoubleOrNull()
                 val longitude = description.attributes.getNamedItem("drone-dji:GpsLongitude")?.nodeValue?.toDoubleOrNull()
                 val yawDegree = description.attributes.getNamedItem("drone-dji:FlightYawDegree")?.nodeValue?.toDoubleOrNull()
+                val gimbalPitch = description.attributes.getNamedItem("drone-dji:GimbalPitchDegree")?.nodeValue?.toDoubleOrNull()
+                val relativeAltitude = description.attributes.getNamedItem("drone-dji:RelativeAltitude")?.nodeValue?.toDoubleOrNull()
 
-                if (latitude != null && longitude != null && yawDegree != null) {
-                    XMPData(latitude, longitude, yawDegree)
+                if (latitude != null && longitude != null && yawDegree != null && gimbalPitch != null && relativeAltitude != null) {
+                    XMPData(latitude, longitude, yawDegree, gimbalPitch, relativeAltitude)
                 } else {
                     null
                 }
@@ -472,7 +507,7 @@ class MainActivity : AppCompatActivity() {
                         val drawable = imagePreview.drawable
                         if (drawable != null) {
                             val widthImage = drawable.intrinsicWidth.toDouble() // Larghezza in pixel
-                            findViewById<EditText>(R.id.editWf).setText(widthImage.toString()) // Mostra nell'EditText
+                            findViewById<EditText>(R.id.editCameraResolutionPx).setText(widthImage.toString()) // Mostra nell'EditText
                         }
                     }
                 }
@@ -494,7 +529,7 @@ class MainActivity : AppCompatActivity() {
             val dx = endPoint!!.x - startPoint!!.x
             val dy = endPoint!!.y - startPoint!!.y
             selectedWidthPx = sqrt(dx * dx + dy * dy).toFloat()
-            editw.setText(selectedWidthPx.toInt().toString())
+            editLargAppFumoPx.setText(selectedWidthPx.toInt().toString())
 
             // Disegna la linea sopra l'immagine
             drawView.setPoints(startPoint!!.x, startPoint!!.y, endPoint!!.x, endPoint!!.y)
