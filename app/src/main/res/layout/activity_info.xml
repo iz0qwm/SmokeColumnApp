@@ -19,14 +19,14 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="5dp" />
 
         <TextView
             android:id="@+id/textInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:textColor="@android:color/black" />
 
     </LinearLayout>

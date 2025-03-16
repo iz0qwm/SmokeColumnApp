@@ -26,7 +26,8 @@
             android:id="@+id/spinnerFOV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:background="@color/light_red"/>
 
         <EditText
             android:id="@+id/editFOV"
@@ -35,7 +36,9 @@
             android:minHeight="48dp"
             android:hint="@string/fov_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="fov" />
+            android:autofillHints="fov"
+            android:textSize="16sp"
+            android:background="@color/light_red"/>
 
         <EditText
             android:id="@+id/editLargStimFumom"
@@ -44,16 +47,9 @@
             android:minHeight="48dp"
             android:hint="@string/column_width_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="column_width" />
-
-        <EditText
-            android:id="@+id/editCameraResolutionPx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:hint="@string/camera_resolution_hint"
-            android:inputType="numberDecimal"
-            android:autofillHints="camera_resolution" />
+            android:autofillHints="column_width"
+            android:textSize="16sp"
+            android:background="@color/light_yellow"/>
 
         <EditText
             android:id="@+id/editLargAppFumoPx"
@@ -62,7 +58,20 @@
             android:minHeight="48dp"
             android:hint="@string/apparent_width_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="apparent_width" />
+            android:autofillHints="apparent_width"
+            android:textSize="16sp"
+            android:background="@color/light_yellow"/>
+
+        <EditText
+            android:id="@+id/editCameraResolutionPx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/camera_resolution_hint"
+            android:inputType="numberDecimal"
+            android:autofillHints="camera_resolution"
+            android:textSize="16sp"
+            android:background="@color/light_gray" />
 
         <EditText
             android:id="@+id/editgimbalPitch"
@@ -71,7 +80,9 @@
             android:minHeight="48dp"
             android:hint="@string/gimbal_pitch_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="gimbalPitch" />
+            android:autofillHints="gimbalPitch"
+            android:textSize="16sp"
+            android:background="@color/light_blue" />
 
         <EditText
             android:id="@+id/editrelativeAltitude"
@@ -80,7 +91,9 @@
             android:minHeight="48dp"
             android:hint="@string/relative_altitude_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="relativeAltitude" />
+            android:autofillHints="relativeAltitude"
+            android:textSize="16sp"
+            android:background="@color/light_blue" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,7 +109,9 @@
                 android:minHeight="48dp"
                 android:hint="@string/drone1_lat_hint"
                 android:inputType="numberDecimal"
-                android:autofillHints="latitude" />
+                android:autofillHints="latitude"
+                android:textSize="16sp"
+                android:background="@color/light_blue" />
 
             <ImageView
                 android:id="@+id/iconSelectImage1"
@@ -116,7 +131,9 @@
             android:minHeight="48dp"
             android:hint="@string/drone1_lon_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="longitude" />
+            android:autofillHints="longitude"
+            android:textSize="16sp"
+            android:background="@color/light_blue" />
 
         <EditText
             android:id="@+id/editHeading1"
@@ -125,7 +142,9 @@
             android:minHeight="48dp"
             android:hint="@string/drone1_heading_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="heading" />
+            android:autofillHints="heading"
+            android:textSize="16sp"
+            android:background="@color/light_blue" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,7 +160,9 @@
                 android:minHeight="48dp"
                 android:hint="@string/drone2_lat_hint"
                 android:inputType="numberDecimal"
-                android:autofillHints="latitude" />
+                android:autofillHints="latitude"
+                android:textSize="16sp"
+                android:background="@color/light_orange" />
 
             <ImageView
                 android:id="@+id/iconSelectImage2"
@@ -162,7 +183,9 @@
             android:minHeight="48dp"
             android:hint="@string/drone2_lon_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="longitude" />
+            android:autofillHints="longitude"
+            android:textSize="16sp"
+            android:background="@color/light_orange"/>
 
         <EditText
             android:id="@+id/editHeading2"
@@ -171,7 +194,9 @@
             android:minHeight="48dp"
             android:hint="@string/drone2_heading_hint"
             android:inputType="numberDecimal"
-            android:autofillHints="heading" />
+            android:autofillHints="heading"
+            android:textSize="16sp"
+            android:background="@color/light_orange"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/algorithmSwitch"
