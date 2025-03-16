@@ -35,6 +35,7 @@ class InfoActivity : AppCompatActivity() {
             @ 2025 Raffaello Di Martino KWOS
         """.trimIndent()
 
+        supportActionBar?.hide()
         textInfo.autoLinkMask = Linkify.WEB_URLS
         textInfo.movementMethod = LinkMovementMethod.getInstance()
     }

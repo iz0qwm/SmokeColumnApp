@@ -27,35 +27,12 @@ import android.view.MotionEvent
 import android.widget.Toast
 import kotlin.math.sqrt
 import android.view.GestureDetector
-import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.util.AttributeSet
-import java.io.File
 import java.io.IOException
-import java.io.ByteArrayInputStream
-import java.util.regex.Pattern
-import android.util.Log
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.DocumentBuilder
 import org.xml.sax.InputSource
-import org.apache.tika.parser.AutoDetectParser
-import org.apache.tika.parser.ParseContext
-import java.io.FileInputStream
-import org.apache.tika.metadata.Metadata
 import org.w3c.dom.Document
-//import org.jdom2.Document
-import org.jdom2.input.SAXBuilder
-//import org.jdom2.input.stream.InputStreamReader
-import org.jdom2.Element
-import org.jdom2.Namespace
 import com.github.chrisbanes.photoview.PhotoView
-
-
 
 
 class MainActivity : AppCompatActivity() {

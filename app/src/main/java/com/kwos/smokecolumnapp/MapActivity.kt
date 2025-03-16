@@ -19,6 +19,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+        supportActionBar?.hide()
 
         // Trova il fragment della mappa e inizializzalo
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment

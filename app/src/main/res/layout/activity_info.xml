@@ -11,11 +11,22 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/titleTextIstruzioni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:hint="@string/titolo_istruzioni_hint"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
             android:id="@+id/textInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/black" />
 
     </LinearLayout>

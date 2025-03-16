@@ -3,6 +3,11 @@
     <string name="map_activity_label">Mappa</string>
     <string name="info_activity_label">Istruzioni</string>
 
+    <!-- Stringhe per i titoli -->
+    <string name="titolo_hint">Avvistamento colonne di fumo Protezione civile</string>
+    <string name="titolo_mappa_hint">Mappa</string>
+    <string name="titolo_istruzioni_hint">Istruzioni</string>
+
     <!-- Stringhe per i campi di input -->
     <string name="fov_hint">FOV obiettivo (gradi)</string>
     <string name="column_width_hint">Larghezza stimata colonna di fumo (m)</string>
@@ -14,6 +19,8 @@
     <string name="drone2_lat_hint">Latitudine Drone 2</string>
     <string name="drone2_lon_hint">Longitudine Drone 2</string>
     <string name="drone2_heading_hint">Heading Drone 2 (gradi)</string>
+    <string name="gimbal_pitch_hint">Gimbal Pitch</string>
+    <string name="relative_altitude_hint">Relative Altitude</string>
 
     <!-- Testo per lo switch -->
     <string name="use_two_drones">Usa due droni</string>
@@ -22,6 +29,8 @@
     <string name="button_calculate">Calcola</string>
     <string name="button_show_map">Mostra Mappa</string>
     <string name="button_info">Istruzioni</string>
+    <string name="icon_Select_Image1">Seleziona immagine Drone 1</string>
+    <string name="icon_Select_Image2">Seleziona immagine Drone 2</string>
 
     <!-- Testo per il risultato -->
     <string name="text_result">Risultato</string>

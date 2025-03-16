@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="2"
-            android:text="Avvistamento colonne di fumo Protezione civile"
+            android:hint="@string/titolo_hint"
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="Gimbal Pitch"
+            android:hint="@string/gimbal_pitch_hint"
             android:inputType="numberDecimal"
             android:autofillHints="gimbalPitch" />
 
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="Relative Altitude"
+            android:hint="@string/relative_altitude_hint"
             android:inputType="numberDecimal"
             android:autofillHints="relativeAltitude" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:src="@android:drawable/ic_menu_gallery"
-                android:contentDescription="Seleziona immagine Drone 1"
+                android:contentDescription="@string/icon_Select_Image1"
                 android:clickable="true"
                 android:focusable="true"/>
         </LinearLayout>
@@ -149,7 +149,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:src="@android:drawable/ic_menu_gallery"
-                android:contentDescription="Seleziona immagine Drone 2"
+                android:contentDescription="@string/icon_Select_Image1"
                 android:clickable="true"
                 android:focusable="true"/>
         </LinearLayout>
