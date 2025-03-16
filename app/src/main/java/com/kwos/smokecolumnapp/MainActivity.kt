@@ -330,11 +330,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun metodo1(fovh: Double, widthcolumn: Double, widthimage: Double, widthapp: Double, gimbalPitch: Double, relativeAltitude: Double): Double {
         val fovhrad = Math.toRadians(fovh)
-
-        //logDebug(TAG, "fovh: $fovh, widthcolumn: $widthcolumn, widthimage: $widthimage, widthapp: $widthapp, fovhrad: $fovhrad")
-        //return ((widthcolumn/1.1) / (2 * tan(fovhrad / 2))) * (widthimage / (widthapp*0.95))
-        //val gimbalPitch = 0.6
-        //val relativeAltitude = 37.8
         val aspectRatio = 4.0 / 3.0
         val fovvrad = 2 * atan(tan(fovhrad / 2) * (1 / aspectRatio))
         val theta = Math.toRadians(abs(gimbalPitch)) // Angolo del gimbal in radianti
