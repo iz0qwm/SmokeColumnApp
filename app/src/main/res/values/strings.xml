@@ -23,7 +23,7 @@
     <string name="relative_altitude_hint">Relative Altitude</string>
 
     <!-- Testo per lo switch -->
-    <string name="use_two_drones">Usa due droni</string>
+    <string name="use_two_drones">Switch algoritmo - Usa due droni</string>
 
     <!-- Testo per i pulsanti -->
     <string name="button_calculate">Calcola</string>

@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
             "AIR 3S - 24mm - FOV 84°" to 84.0,
             "AIR 3S - 70mm - FOV 35°" to 35.0,
             "Mavic 2 PRO - 24mm - FOV 83°" to 83.0,
+            "Mavic 2 Ent. - 24mm - FOV 85°" to 85.0,
             "Mavic 2 Zoom - 24mm - FOV 83°" to 83.0,
             "Mavic 2 Zoom - 48mm - FOV 48°" to 48.0,
             "Mavic 3 Pro - 24mm - FOV 84°" to 84.0,
@@ -323,10 +324,27 @@ class MainActivity : AppCompatActivity() {
             val result = trovaIntersezione(latDrone1, lonDrone1, yaw1, latDrone2, lonDrone2, yaw2)
             latFumo = result.latitude
             lonFumo = result.longitude
-            textResult.text = "Lat: ${"%.6f".format(latFumo)}, Lon: ${"%.6f".format(lonFumo)}"
+
+            // Calcolo della distanza tra Drone1 e la colonna di fumo
+            val distanzaMetri = haversine(latDrone1, lonDrone1, latFumo, lonFumo)
+
+            textResult.text ="Distanza dal primo punto: ${"%.2f".format(distanzaMetri)} m\n" +
+            "Lat: ${"%.6f".format(latFumo)}, Lon: ${"%.6f".format(lonFumo)}"
         } catch (e: Exception) {
             textResult.text = "Errore: ${e.message}"
         }
+    }
+
+    // Funzione per calcolare la distanza con la formula dell'haversine
+    private fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val R = 6371000.0 // Raggio della Terra in metri
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+
+        val a = sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2).pow(2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        return R * c // Distanza in metri
     }
 
     private fun trovaIntersezione(lat1: Double, lon1: Double, yaw1: Double, lat2: Double, lon2: Double, yaw2: Double): LatLng {
